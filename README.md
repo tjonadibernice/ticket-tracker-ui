@@ -1,16 +1,33 @@
-# React + Vite
+# Ticket Tracker UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React frontend for browsing, creating, filtering, and closing support tickets.
 
-Currently, two official plugins are available:
+## What this is
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The client-facing piece of the Ticket Tracker application. Talks to [ticket-tracker-api](https://github.com/tjonadibernice/ticket-tracker-api) (Node/Express) over HTTP, which in turn reads/writes a PostgreSQL database whose schema is managed by [ticket-tracker](https://github.com/tjonadibernice/ticket-tracker) (Python/SQLAlchemy/Alembic).
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- View all tickets
+- Filter by status (all / open / closed)
+- Create a new ticket
+- Close an open ticket
 
-## Expanding the ESLint configuration
+## Tech stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React, Vite
+
+## Setup
+
+```bash
+npm install
+npm run dev
+```
+
+Requires [ticket-tracker-api](https://github.com/tjonadibernice/ticket-tracker-api) running and reachable — update the API URL in `App.jsx` if it's not running on `http://localhost:3001`.
+
+## What I learned building this
+
+- Lifting state up: the parent `App` component owns ticket state; child components (`TicketList`, `NewTicketForm`) receive data and callbacks as props rather than managing their own copies
+- Controlled form inputs and the standard React create/update/filter pattern
+- Debugging a real cross-environment networking issue: WSL2's `localhost` port forwarding didn't reliably reach the browser on Windows, requiring the machine's network IP instead
